@@ -69,4 +69,12 @@ public class Item
     {
         return quantity;
     }
+    public void addMore(int num)
+    {
+        quantity += num;
+    }
+    public void takeAway(int num)
+    {
+        quantity -= num;
+    }
 }  

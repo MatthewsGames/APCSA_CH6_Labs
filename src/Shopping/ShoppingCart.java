@@ -1,9 +1,9 @@
 package Shopping;
 
 /**
- * Name:
- * Date:
- * Period:
+ * Name: Matthew Sheppard
+ * Date: 10/18/18
+ * Period: 1
  *
  * Shopping.ShoppingCart.java
  *
@@ -18,6 +18,7 @@ public class ShoppingCart
     private double totalPrice;  // total price of items in the cart
     private int capacity;       // current cart capacity
     //TODO 1a) Declare a cart instance variable
+    private Item cart[] = new Item[5];
 
 
     /**
@@ -41,11 +42,64 @@ public class ShoppingCart
     public void addToCart(String itemName, double price, int quantity)
     {
         //TODO 1b) Complete the addToCart method
+        int a = -1;
+        for(int i = 0; i < capacity; i++){
+            if(cart[i].getName().equals(itemName)){
+                a = i;
+                break;
+            }
+        }
+        if(a >= 0) {
+            cart[a].addMore(quantity);
+            totalPrice += price*quantity;
+        }
+        if(a == -1) {
+            for (int i = 0; i < capacity; i++) {
+                if (cart[i] == null) {
+                    a = i;
+                    break;
+                }
+            }
+            if (a >= 0) {
+                cart[a] = new Item(itemName, price, quantity);
+                totalPrice += price * quantity;
+            } else {
+                System.out.println("Your cart is already full!");
+            }
+        }
 
     }
+    public void removeFromCart(String itemName, double price, int quantity)
+    {
+        //TODO 1b) Complete the addToCart method
+        int a = -1;
+        for(int i = 0; i < capacity; i++){
+            if(cart[i].getName() == itemName){
+                a = i;
+                break;
+            }
+        }
+        if(a >= 0 && cart[a].getQuantity() >= quantity) {
+            cart[a].takeAway(quantity);
+            totalPrice -= price*quantity;
+            if(cart[a].getQuantity() == 0){
+                cart[a] = null;
+            }
+        }
+        else if(a >= 0){
+            System.out.println("There is not enough of that item to take away.");
+        }
+        else {
+            System.out.println("That item is not in your cart!");
+        }
 
+
+    }
     //TODO 2b) Complete the getter method getTotalPrice. Remember the getter should not print anything.
-
+    public double getTotalPrice()
+    {
+        return totalPrice;
+    }
 
     public int getCartLength()
     {
